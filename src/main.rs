@@ -154,7 +154,8 @@ fn main() {
             create_file(UDEV_INTEGRATED_PATH, UDEV_INTEGRATED, false);
                         println!("Switching to integrated mode");
             println!("Operation completed successfully");
-            println!("Please reboot your computer for changes to take effect!");
+            println!("Restarting display manager to apply changes...");
+            let _ = Command::new("systemctl").args(["restart", "display-manager"]).status();
             return;
         }
         if mode == "hybrid" {
@@ -172,7 +173,8 @@ fn main() {
             }
                         println!("Switching to hybrid mode");
             println!("Operation completed successfully");
-            println!("Please reboot your computer for changes to take effect!");
+            println!("Restarting display manager to apply changes...");
+            let _ = Command::new("systemctl").args(["restart", "display-manager"]).status();
             return;
         }
         if mode == "nvidia" {
@@ -205,7 +207,8 @@ fn main() {
             }
                         println!("Switching to nvidia mode");
             println!("Operation completed successfully");
-            println!("Please reboot your computer for changes to take effect!");
+            println!("Restarting display manager to apply changes...");
+            let _ = Command::new("systemctl").args(["restart", "display-manager"]).status();
             return;
         }
     }
