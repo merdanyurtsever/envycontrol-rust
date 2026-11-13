@@ -1,4 +1,3 @@
-#![allow(dead_code)]
 pub const VERSION: &str = "3.5.3";
 pub const CACHE_FILE_PATH: &str = "/var/cache/envycontrol/cache.json";
 pub const BLACKLIST_PATH: &str = "/etc/modprobe.d/blacklist-nvidia.conf";
@@ -23,10 +22,6 @@ pub const MODESET_CONTENT: &str = include_str!("../constants/modeset_content.txt
 pub const MODESET_RTD3: &str = include_str!("../constants/modeset_rtd3.txt");
 pub const MODESET_CURRENT_RTD3: &str = include_str!("../constants/modeset_current_rtd3.txt");
 pub const MODESET_CURRENT_CONTENT: &str = include_str!("../constants/modeset_current_content.txt");
-pub const SDDM_XSETUP_CONTENT: &str = include_str!("../constants/sddm_xsetup_content.txt");
 pub const LIGHTDM_CONFIG_CONTENT: &str = include_str!("../constants/lightdm_config_content.txt");
 pub const NVIDIA_XRANDR_SCRIPT: &str = include_str!("../constants/nvidia_xrandr_script.txt");
 
-pub const SUPPORTED_MODES: &[&str] = &["integrated", "hybrid", "nvidia"];
-pub const SUPPORTED_DISPLAY_MANAGERS: &[&str] = &["gdm", "gdm3", "sddm", "lightdm"];
-pub const RTD3_MODES: &[i32] = &[0, 1, 2, 3];
