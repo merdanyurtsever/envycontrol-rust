@@ -1,4 +1,4 @@
-pub const VERSION: &str = "3.5.2";
+pub const VERSION: &str = "3.5.3";
 pub const CACHE_FILE_PATH: &str = "/var/cache/envycontrol/cache.json";
 pub const BLACKLIST_PATH: &str = "/etc/modprobe.d/blacklist-nvidia.conf";
 pub const UDEV_INTEGRATED_PATH: &str = "/etc/udev/rules.d/50-remove-nvidia.rules";
