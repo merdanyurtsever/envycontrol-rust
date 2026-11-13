@@ -53,7 +53,7 @@ struct Cli {
 
 fn create_file(path: &str, content: &str, executable: bool) {
     // Admin-friendly: avoid writing to immutable system paths like /usr, /lib when not writable
-    if (path.starts_with("/usr") || path.starts_with("/lib")) {
+    if path.starts_with("/usr") || path.starts_with("/lib") {
         // check writability
         if fs::metadata(path).map(|m| m.permissions().readonly()).unwrap_or(true) {
             eprintln!("warning: skipping write to immutable path {}", path);
@@ -123,7 +123,7 @@ fn get_igpu_vendor() -> String {
 }
 
 
-fn generate_xrandr_script(igpu_vendor: &str) -> String {
+fn generate_xrandr_script(_igpu_vendor: &str) -> String {
     let pci = get_nvidia_gpu_pci_bus();
     NVIDIA_XRANDR_SCRIPT.replace("{}", &pci)
 }
