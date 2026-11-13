@@ -2,3 +2,8 @@ __pycache__
 .idea/
 result/
 .direnv/
+
+
+# Added by cargo
+
+/target
