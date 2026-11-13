@@ -122,22 +122,6 @@ fn get_igpu_vendor() -> String {
     "intel".to_string()
 }
 
-fn rebuild_initramfs() {
-    // On immutable systems, initramfs is managed by the OS; skip if /boot or /usr not writable
-    let boot_writable = fs::metadata("/boot").map(|m| !m.permissions().readonly()).unwrap_or(false);
-    let usr_writable = fs::metadata("/usr").map(|m| !m.permissions().readonly()).unwrap_or(false);
-    if !boot_writable || !usr_writable {
-        eprintln!("warning: skipping initramfs rebuild on immutable/read-only system");
-        return;
-    }
-    let tools = ["dracut", "mkinitcpio", "update-initramfs"];
-    for t in tools {
-        if Command::new("which").arg(t).status().map(|s| s.success()).unwrap_or(false) {
-            let _ = Command::new(t).arg("-f").status();
-            return;
-        }
-    }
-}
 
 fn generate_xrandr_script(igpu_vendor: &str) -> String {
     let pci = get_nvidia_gpu_pci_bus();
@@ -168,8 +152,7 @@ fn main() {
             cleanup();
             create_file(BLACKLIST_PATH, BLACKLIST_CONTENT, false);
             create_file(UDEV_INTEGRATED_PATH, UDEV_INTEGRATED, false);
-            rebuild_initramfs();
-            println!("Switching to integrated mode");
+                        println!("Switching to integrated mode");
             println!("Operation completed successfully");
             println!("Please reboot your computer for changes to take effect!");
             return;
@@ -187,8 +170,7 @@ fn main() {
                 create_file(MODESET_PATH, &c, false);
                 create_file(UDEV_PM_PATH, UDEV_PM_CONTENT, false);
             }
-            rebuild_initramfs();
-            println!("Switching to hybrid mode");
+                        println!("Switching to hybrid mode");
             println!("Operation completed successfully");
             println!("Please reboot your computer for changes to take effect!");
             return;
@@ -221,8 +203,7 @@ fn main() {
                 create_file(LIGHTDM_SCRIPT_PATH, &generate_xrandr_script(&igpu), true);
                 create_file(LIGHTDM_CONFIG_PATH, LIGHTDM_CONFIG_CONTENT, false);
             }
-            rebuild_initramfs();
-            println!("Switching to nvidia mode");
+                        println!("Switching to nvidia mode");
             println!("Operation completed successfully");
             println!("Please reboot your computer for changes to take effect!");
             return;
