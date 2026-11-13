@@ -123,7 +123,13 @@ fn get_igpu_vendor() -> String {
 }
 
 fn rebuild_initramfs() {
-    // best-effort: try common tools
+    // On immutable systems, initramfs is managed by the OS; skip if /boot or /usr not writable
+    let boot_writable = fs::metadata("/boot").map(|m| !m.permissions().readonly()).unwrap_or(false);
+    let usr_writable = fs::metadata("/usr").map(|m| !m.permissions().readonly()).unwrap_or(false);
+    if !boot_writable || !usr_writable {
+        eprintln!("warning: skipping initramfs rebuild on immutable/read-only system");
+        return;
+    }
     let tools = ["dracut", "mkinitcpio", "update-initramfs"];
     for t in tools {
         if Command::new("which").arg(t).status().map(|s| s.success()).unwrap_or(false) {
